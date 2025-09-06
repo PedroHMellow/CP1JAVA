@@ -1,39 +1,22 @@
 package br.com.fiap.winery;
 
-import java.util.Scanner;
-
 public class ApplicationClient1 {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
         try {
+            // Usando as classes geradas automaticamente pelo Maven plugin
             WineStockServiceImplementationService service = new WineStockServiceImplementationService();
-            WineStockService port = service.getWineStockServiceImplementationPort();
-
+            WineStockService wineStockService = service.getWineStockServiceImplementationPort();
+            
             System.out.println("Conectando ao serviço de estoque de vinhos...");
-
-            // Exibe o menu de vinhos para o usuário
-            String menu = port.getMenu();
-            System.out.println("----- Vinhos Disponíveis -----");
+            
+            // Chamando o método getMenu e exibindo o resultado
+            String menu = wineStockService.getMenu();
+            System.out.println("----- Menu de Vinhos -----");
             System.out.println(menu);
-            System.out.println("------------------------------");
-
-            Scanner scanner = new Scanner(System.in);
-
-            System.out.print("\nDigite o nome do vinho para consultar o estoque: ");
-            String wineName = scanner.nextLine();
-
-            System.out.println("\nConsultando estoque para '" + wineName + "'...");
-
-            // Nota: Estamos assumindo que a interface do serviço 'WineStockService'
-            // possui um método 'checkStock(String wineName)' que retorna uma String.
-            String stockInfo = port.checkStock(wineName);
-
-            System.out.println("Resposta do servidor: " + stockInfo);
-
-            scanner.close();
-        
+            System.out.println("-------------------------");
+            
         } catch (Exception e) {
-            System.err.println("\n[ERRO] Não foi possível conectar ao serviço. Verifique se o servidor (Publisher) está em execução.");
+            System.err.println("Erro ao conectar ao serviço. O servidor (Publisher) está rodando?");
             e.printStackTrace();
         }
     }
